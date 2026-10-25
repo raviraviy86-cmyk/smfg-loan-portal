@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,6 +37,7 @@
       border: 0;
       font-weight: bold;
     }
+    button:disabled { opacity: 0.6; }
     .notice { color: #596579; line-height: 1.6; }
   </style>
 </head>
@@ -45,12 +45,17 @@
   <main>
     <h1>SMFG Loan Portal</h1>
     <p class="notice">
-      Welcome to SMFG Fintech. This is a demonstration
-      loan enquiry page.
+      Welcome to SMFG Fintech. Loan enquiry demonstration.
     </p>
-    <form id="demoForm">
+
+    <form id="loanForm">
       <label for="name">Full Name</label>
-      <input id="name" placeholder="Enter your name" required>
+      <input id="name" required maxlength="100"
+        placeholder="Enter your name">
+
+      <label for="phone">Phone Number</label>
+      <input id="phone" type="tel" required
+        maxlength="20" placeholder="Enter phone number">
 
       <label for="loan">Loan Type</label>
       <select id="loan" required>
@@ -62,24 +67,58 @@
 
       <label for="amount">Requested Amount</label>
       <input id="amount" type="number" min="1"
-        placeholder="Enter amount" required>
+        required placeholder="Enter amount">
 
-      <button type="submit">Submit Demo Enquiry</button>
+      <button id="submitBtn" type="submit">
+        Submit Loan Enquiry
+      </button>
     </form>
+
     <p id="message" class="notice" aria-live="polite"></p>
-    <p class="notice">
-      Demo only: this form does not send or save your information.
-    </p>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    document.getElementById("demoForm").addEventListener(
-      "submit", function(event) {
-        event.preventDefault();
-        document.getElementById("message").textContent =
-          "Demo successful. No information was saved.";
-      }
+    const supabaseClient = window.supabase.createClient(
+      "https://gpaoernivxkhuuwsmtvh.supabase.co",
+      "sb_publishable_7TnO-eq3RA2cXx1cdJPLjw_dF2FFHz3"
     );
+
+    const form = document.getElementById("loanForm");
+    const message = document.getElementById("message");
+    const button = document.getElementById("submitBtn");
+
+    form.addEventListener("submit", async function(event) {
+      event.preventDefault();
+      button.disabled = true;
+      message.textContent = "Submitting...";
+
+      const record = {
+        full_name: document.getElementById("name").value.trim(),
+        phone_number: document.getElementById("phone").value.trim(),
+        loan_type: document.getElementById("loan").value,
+        loan_amount: Number(document.getElementById("amount").value),
+        status: "Pending"
+      };
+
+      try {
+        const { error } = await supabaseClient
+          .from("loan_applicationssmfg")
+          .insert(record);
+
+        if (error) throw error;
+
+        message.textContent =
+          "Enquiry submitted successfully!";
+        form.reset();
+      } catch (error) {
+        console.error(error);
+        message.textContent =
+          "Submission failed. Please check the database columns and access policy.";
+      } finally {
+        button.disabled = false;
+      }
+    });
   </script>
 </body>
 </html>
