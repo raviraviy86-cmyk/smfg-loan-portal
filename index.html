@@ -93,13 +93,15 @@
       button.disabled = true;
       message.textContent = "Submitting...";
 
-     const record = {
+     
+const record = {
   "Full name": document.getElementById("name").value.trim(),
-  "Phone number": document.getElementById("phone").value.trim(),
+  "Phone numbe": document.getElementById("phone").value.trim(),
   "Loan type": document.getElementById("loan").value,
   "Loan amount": Number(document.getElementById("amount").value),
   "Status": "Pending"
-      };
+};
+
 
       try {
         const { error } = await supabaseClient
