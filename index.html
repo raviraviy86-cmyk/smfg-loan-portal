@@ -113,12 +113,10 @@ const record = {
         message.textContent =
           "Enquiry submitted successfully!";
         form.reset();
-      
-} catch (error) {
-  console.error("Supabase error:", error);
-  message.textContent =
-    "Submission failed: " + error.message;
-      }
+            } catch (error) {
+        console.error("Supabase error:", error);
+        message.textContent =
+          "Submission failed: " + error.message;
       } finally {
         button.disabled = false;
       }
