@@ -113,10 +113,12 @@ const record = {
         message.textContent =
           "Enquiry submitted successfully!";
         form.reset();
-      } catch (error) {
-        console.error(error);
-        message.textContent =
-          "Submission failed. Please check the database columns and access policy.";
+      
+} catch (error) {
+  console.error("Supabase error:", error);
+  message.textContent =
+    "Submission failed: " + error.message;
+      }
       } finally {
         button.disabled = false;
       }
