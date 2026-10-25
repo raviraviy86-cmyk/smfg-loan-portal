@@ -1,1 +1,85 @@
 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMFG Loan Portal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      margin: 0;
+      padding: 24px 16px;
+      color: #17233c;
+    }
+    main {
+      max-width: 460px;
+      margin: 30px auto;
+      background: white;
+      padding: 24px;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px #00000012;
+    }
+    h1 { color: #155eef; }
+    input, select, button {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px;
+      margin-top: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    input, select { border: 1px solid #ccd3df; }
+    button {
+      background: #155eef;
+      color: white;
+      border: 0;
+      font-weight: bold;
+    }
+    .notice { color: #596579; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>SMFG Loan Portal</h1>
+    <p class="notice">
+      Welcome to SMFG Fintech. This is a demonstration
+      loan enquiry page.
+    </p>
+    <form id="demoForm">
+      <label for="name">Full Name</label>
+      <input id="name" placeholder="Enter your name" required>
+
+      <label for="loan">Loan Type</label>
+      <select id="loan" required>
+        <option value="">Select loan type</option>
+        <option>Personal Loan</option>
+        <option>Business Loan</option>
+        <option>Home Loan</option>
+      </select>
+
+      <label for="amount">Requested Amount</label>
+      <input id="amount" type="number" min="1"
+        placeholder="Enter amount" required>
+
+      <button type="submit">Submit Demo Enquiry</button>
+    </form>
+    <p id="message" class="notice" aria-live="polite"></p>
+    <p class="notice">
+      Demo only: this form does not send or save your information.
+    </p>
+  </main>
+
+  <script>
+    document.getElementById("demoForm").addEventListener(
+      "submit", function(event) {
+        event.preventDefault();
+        document.getElementById("message").textContent =
+          "Demo successful. No information was saved.";
+      }
+    );
+  </script>
+</body>
+</html>
