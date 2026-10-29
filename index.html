@@ -187,10 +187,159 @@
                 <option>18 Months</option>
                 <option>24 Months</option>
                 <option>36 Months</option>
-            </select>
-        </div>
-        <button class="btn" onclick="nextStep(4)">View Loan Summary</button>
-    </div>
+         </div>
+        
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loan EMI Calculator</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#eef1f7;font-family:Arial,sans-serif;color:#13203d}
+.card{max-width:520px;margin:20px auto;background:#fff;padding:22px;border-radius:24px;box-shadow:0 5px 25px #0001}
+h2{margin-top:0}
+label{display:block;margin-top:18px;font-weight:600;color:#66748b}
+select{width:100%;padding:14px;margin-top:8px;border:1px solid #dce2eb;border-radius:10px;background:white;font-size:16px}
+.summary{margin-top:25px;padding:22px 10px;text-align:center;background:#f7f8fc;border:1px solid #e0e5ed;border-radius:18px}
+.small{font-size:13px;letter-spacing:1px;color:#8795aa;font-weight:bold}
+.emi{font-size:36px;font-weight:bold;margin:16px 0}
+.green{color:#07852c}
+.line{display:flex;justify-content:space-between;gap:12px;margin:22px 0}
+.line span{color:#65748b}
+.line strong{text-align:right}
+button{width:100%;padding:15px;border:1px solid #dce2eb;border-radius:12px;background:#fff;font-size:16px;font-weight:bold;margin-top:10px;cursor:pointer}
+.apply{background:#008b2b;color:white;border:0;margin-top:16px}
+#schedule{display:none;margin-top:20px}
+.note{font-size:12px;line-height:1.6;color:#8995a7;text-align:center}
+</style>
+</head>
+<body>
+<div class="card">
+<h2>Loan EMI Calculator</h2>
+
+<label>Loan Amount</label>
+<select id="amount" onchange="calculate()">
+<option value="100000">₹1,00,000</option>
+<option value="150000">₹1,50,000</option>
+<option value="200000">₹2,00,000</option>
+<option value="250000">₹2,50,000</option>
+<option value="300000">₹3,00,000</option>
+<option value="350000">₹3,50,000</option>
+<option value="400000">₹4,00,000</option>
+<option value="450000">₹4,50,000</option>
+<option value="500000">₹5,00,000</option>
+</select>
+
+<label>Loan Tenure</label>
+<select id="months" onchange="calculate()">
+<option value="12">12 Months</option>
+<option value="18">18 Months</option>
+<option value="24">24 Months</option>
+<option value="36">36 Months</option>
+<option value="42">42 Months</option>
+</select>
+
+<label>Interest Rate</label>
+<select id="rate" onchange="calculate()">
+<option value="1">1% Flat Monthly</option>
+</select>
+
+<h3 class="small" style="margin-top:30px">ESTIMATED COST SUMMARY</h3>
+
+<div class="summary">
+<div class="small">MONTHLY INSTALLMENT (EMI)</div>
+<div class="emi" id="emi">₹ 0</div>
+<strong class="green">INTEREST INCLUDED</strong>
+</div>
+
+<div class="line">
+<span>Interest Rate</span>
+<strong id="rateText">1% Flat Monthly</strong>
+</div>
+<div class="line">
+<span>Processing Fee (2%)</span>
+<strong id="fee">₹ 0</strong>
+</div>
+<div class="line">
+<span>GST on Fee (18%)</span>
+<strong id="gst">₹ 0</strong>
+</div>
+<hr>
+<div class="line">
+<strong>Net Disbursed (In Hand)</strong>
+<strong class="green" id="net">₹ 0</strong>
+</div>
+<div class="line">
+<strong>Total Repayable Amount</strong>
+<strong id="total">₹ 0</strong>
+</div>
+
+<button onclick="toggleSchedule()">View Complete EMI Schedule Chart</button>
+<div id="schedule"></div>
+
+<button class="apply" onclick="alert('Connect your loan application form to continue.')">Apply Now →</button>
+<p class="note">Indicative calculation only. Actual loan terms, fees and taxes may vary.</p>
+</div>
+
+<script>
+function money(n){
+ return "₹ "+Math.round(n).toLocaleString("en-IN");
+}
+
+function calculate(){
+ const p=Number(document.getElementById("amount").value);
+ const m=Number(document.getElementById("months").value);
+ const r=Number(document.getElementById("rate").value)/100;
+
+ const interest=p*r*m;
+ const total=p+interest;
+ const emi=total/m;
+ const fee=p*0.02;
+ const gst=fee*0.18;
+ const net=p-fee-gst;
+
+ document.getElementById("emi").textContent=money(emi);
+ document.getElementById("fee").textContent=money(fee);
+ document.getElementById("gst").textContent=money(gst);
+ document.getElementById("net").textContent=money(net);
+ document.getElementById("total").textContent=money(total);
+ document.getElementById("rateText").textContent=
+   document.getElementById("rate").value+"% Flat Monthly";
+
+ document.getElementById("schedule").style.display="none";
+ document.getElementById("schedule").innerHTML="";
+}
+
+function toggleSchedule(){
+ const box=document.getElementById("schedule");
+ if(box.style.display==="block"){
+   box.style.display="none";
+   return;
+ }
+
+ const p=Number(document.getElementById("amount").value);
+ const m=Number(document.getElementById("months").value);
+ const r=Number(document.getElementById("rate").value)/100;
+ const emi=p*(1+r*m)/m;
+
+ let html="<h3>EMI PAYMENT SCHEDULE</h3>";
+ html+="<div class='line'><strong>Month</strong><strong>EMI Amount</strong></div>";
+
+ for(let i=1;i<=m;i++){
+   html+="<div class='line'><span>Month "+i+
+         "</span><strong>"+money(emi)+"</strong></div>";
+ }
+
+ box.innerHTML=html;
+ box.style.display="block";
+}
+calculate();
+</script>
+</body>
+</html>
+        
 
     <!-- Step 4: Upload KYC Files -->
     <div id="step-4" class="step">
