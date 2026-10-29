@@ -1,244 +1,260 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SMFG Loan Portal</title>
-<style>
-body{font-family:Arial,sans-serif;background:#f3f6fb;margin:0;padding:20px;color:#17233c}
-main{max-width:460px;margin:20px auto;background:white;padding:24px;border-radius:14px;box-shadow:0 4px 18px #0001}
-h1{color:#155eef}
-input,select,button{width:100%;box-sizing:border-box;padding:13px;margin-top:12px;border-radius:8px;font-size:16px}
-input,select{border:1px solid #ccd3df}
-button{background:#155eef;color:white;border:0;font-weight:bold;cursor:pointer}
-button:disabled{opacity:.6}
-.secondary{background:#526176}
-.notice{color:#596579;line-height:1.6;overflow-wrap:anywhere}
-.item{border:1px solid #dce3ee;padding:12px;margin-top:12px;border-radius:8px}
-.hidden{display:none}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avivaa Finance - Loan Application</title>
+    <style>
+        :root {
+            --primary-color: #0b2545;
+            --accent-green: #138a36;
+            --bg-light: #f4f6f9;
+            --border-color: #cbd5e1;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .header h2 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        .header p {
+            color: #64748b;
+            font-size: 14px;
+            margin: 0;
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-green);
+        }
+        .btn {
+            width: 100%;
+            background-color: var(--accent-green);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        .back-btn {
+            background: none;
+            border: none;
+            color: #64748b;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            padding: 0;
+        }
+    </style>
 </head>
 <body>
-<main>
-<h1>SMFG Loan Portal</h1>
-<p class="notice">Apply for a loan and securely view your own applications.</p>
 
-<section id="authSection">
-<h3>Applicant Login / Sign Up</h3>
-<form id="authForm">
-<input id="email" type="email" required placeholder="Email address" autocomplete="email">
-<input id="password" type="password" required minlength="8" placeholder="Password (minimum 8 characters)" autocomplete="current-password">
-<button type="submit" id="loginBtn">Login</button>
-</form>
-<button id="signupBtn" type="button" class="secondary">Create Applicant Account</button>
-</section>
-
-<section id="appSection" class="hidden">
-<p id="welcome" class="notice"></p>
-<button id="logoutBtn" class="secondary" type="button">Logout</button>
-
-<h3>Apply for Loan</h3>
-<form id="loanForm">
-<label for="name">Full Name</label>
-<input id="name" required maxlength="100" placeholder="Enter full name">
-
-<label for="phone">Phone Number</label>
-<input id="phone" type="tel" required maxlength="20" placeholder="Enter phone number">
-
-<label for="loan">Loan Type</label>
-<select id="loan" required>
-<option value="">Select loan type</option>
-<option>Personal Loan</option>
-<option>Business Loan</option>
-<option>Home Loan</option>
-</select>
-
-<label for="amount">Requested Amount</label>
-<input id="amount" type="number" min="1" required placeholder="Enter amount">
-
-<button id="submitBtn" type="submit">Submit Application</button>
-</form>
-
-<p id="loanMessage" class="notice" aria-live="polite"></p>
-<hr>
-<h3>My Applications</h3>
-<button id="refreshBtn" type="button" class="secondary">Refresh Applications</button>
-<div id="applications"></div>
-</section>
-
-<p id="message" class="notice" aria-live="polite"></p>
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const db = window.supabase.createClient(
-  "https://gpaoernivxkhuuwsmtvh.supabase.co",
-  "sb_publishable_7TnO-eq3RA2cXx1cdJPLjw_dF2FFHz3"
-);
-
-const $ = id => document.getElementById(id);
-let currentUser = null;
-
-function showMessage(text) {
-  $("message").textContent = text;
-}
-
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, ch => ({
-    "&":"&amp;", "<":"&lt;", ">":"&gt;",
-    '"':"&quot;", "'":"&#39;"
-  })[ch]);
-}
-
-async function updateScreen(user) {
-  currentUser = user;
-  $("authSection").classList.toggle("hidden", !!user);
-  $("appSection").classList.toggle("hidden", !user);
-  $("welcome").textContent = user ? "Signed in: " + user.email : "";
-  showMessage("");
-
-  if (user) await loadApplications();
-}
-
-async function loadApplications() {
-  if (!currentUser) return;
-
-  $("applications").textContent = "Loading applications...";
-
-  const { data, error } = await db
-    .from("loan_applicationssmfg")
-    .select('*')
-    .eq("user_id", currentUser.id)
-    .order("Id", { ascending: false });
-
-  if (error) {
-    $("applications").textContent =
-      "Could not load applications: " + error.message;
-    return;
-  }
-
-  if (!data.length) {
-    $("applications").textContent = "No applications submitted yet.";
-    return;
-  }
-
-  $("applications").innerHTML = data.map(row => `
-    <div class="item">
-      <strong>Application ID:</strong> ${escapeHTML(row.Id)}<br>
-      <strong>Name:</strong> ${escapeHTML(row["Full name"])}<br>
-      <strong>Phone:</strong> ${escapeHTML(row["Phone number"])}<br>
-      <strong>Loan Type:</strong> ${escapeHTML(row["Loan type"])}<br>
-      <strong>Amount:</strong> ${escapeHTML(row["Loan amount"])}<br>
-      <strong>Status:</strong> ${escapeHTML(row.Status)}
+<div class="container">
+    <div class="header">
+        <h2>Avivaa Finance</h2>
+        <p>Instant Online Loan Approval</p>
     </div>
-  `).join("");
-}
 
-$("authForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  const btn = $("loginBtn");
-  btn.disabled = true;
-  showMessage("Signing in...");
+    <!-- Step 1: Register / Create Account -->
+    <div id="step-1" class="step active">
+        <h3>Create Account</h3>
+        <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" id="fullName" placeholder="Enter your full name" required>
+        </div>
+        <div class="form-group">
+            <label>Email ID *</label>
+            <input type="email" id="email" placeholder="name@example.com" required>
+        </div>
+        <div class="form-group">
+            <label>Mobile Number *</label>
+            <input type="tel" id="phone" placeholder="Enter 10-digit number" required>
+        </div>
+        <div class="form-group">
+            <label>Password *</label>
+            <input type="password" id="password" placeholder="****" required>
+        </div>
+        <button class="btn" onclick="nextStep(2)">Verify & Register Account</button>
+    </div>
 
-  try {
-    const { error } = await db.auth.signInWithPassword({
-      email: $("email").value.trim(),
-      password: $("password").value
-    });
-    if (error) throw error;
-    showMessage("");
-  } catch (error) {
-    showMessage(error.message);
-  } finally {
-    btn.disabled = false;
-  }
-});
+    <!-- Step 2: Personal Information -->
+    <div id="step-2" class="step">
+        <button class="back-btn" onclick="prevStep(1)">← Back</button>
+        <h3>Personal Information</h3>
+        <div class="form-group">
+            <label>Full Name (As on Documents) *</label>
+            <input type="text" id="docName" placeholder="Enter full name" required>
+        </div>
+        <div class="form-group">
+            <label>Current Address *</label>
+            <input type="text" id="address" placeholder="House No, Street, City, Pin Code" required>
+        </div>
+        <div class="form-group">
+            <label>PAN Card Number *</label>
+            <input type="text" id="pan" placeholder="ABCDE1234F" required>
+        </div>
+        <div class="form-group">
+            <label>Aadhaar Card Number *</label>
+            <input type="text" id="aadhaar" placeholder="XXXX XXXX XXXX" required>
+        </div>
+        <div class="form-group">
+            <label>Employment Type *</label>
+            <select id="employment">
+                <option>Salaried Employee</option>
+                <option>Self-Employed / Business</option>
+                <option>Freelancer / Contractor</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Net Monthly Income (INR) *</label>
+            <input type="number" id="income" placeholder="e.g. 45000" required>
+        </div>
+        <button class="btn" onclick="nextStep(3)">Proceed to Loan Config</button>
+    </div>
 
-$("signupBtn").addEventListener("click", async () => {
-  const email = $("email").value.trim();
-  const password = $("password").value;
+    <!-- Step 3: Configure Loan -->
+    <div id="step-3" class="step">
+        <button class="back-btn" onclick="prevStep(2)">← Back</button>
+        <h3>Configure Your Loan</h3>
+        <div class="form-group">
+            <label>Loan Amount Required (₹)</label>
+            <input type="number" id="loanAmount" value="150000" min="50000" max="500000">
+        </div>
+        <div class="form-group">
+            <label>Repayment Period</label>
+            <select id="tenure">
+                <option>12 Months</option>
+                <option>18 Months</option>
+                <option>24 Months</option>
+                <option>36 Months</option>
+            </select>
+        </div>
+        <button class="btn" onclick="nextStep(4)">View Loan Summary</button>
+    </div>
 
-  if (!email || password.length < 8) {
-    showMessage("Enter your email and a password of at least 8 characters.");
-    return;
-  }
+    <!-- Step 4: Upload KYC Files -->
+    <div id="step-4" class="step">
+        <button class="back-btn" onclick="prevStep(3)">← Back</button>
+        <h3>Upload KYC Files</h3>
+        <div class="form-group">
+            <label>PAN Card Front Upload *</label>
+            <input type="file" required>
+        </div>
+        <div class="form-group">
+            <label>Aadhaar Card Front Side *</label>
+            <input type="file" required>
+        </div>
+        <div class="form-group">
+            <label>Aadhaar Card Back Side *</label>
+            <input type="file" required>
+        </div>
+        <button class="btn" onclick="nextStep(5)">Proceed to Bank Details</button>
+    </div>
 
-  $("signupBtn").disabled = true;
-  showMessage("Creating account...");
+    <!-- Step 5: Disbursal Bank Account -->
+    <div id="step-5" class="step">
+        <button class="back-btn" onclick="prevStep(4)">← Back</button>
+        <h3>Disbursal Account</h3>
+        <div class="form-group">
+            <label>Account Holder Name *</label>
+            <input type="text" id="accName" placeholder="As per bank records" required>
+        </div>
+        <div class="form-group">
+            <label>Select Bank *</label>
+            <select>
+                <option>State Bank of India</option>
+                <option>HDFC Bank</option>
+                <option>ICICI Bank</option>
+                <option>Axis Bank</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Account Number *</label>
+            <input type="text" id="accNo" placeholder="Enter account number" required>
+        </div>
+        <div class="form-group">
+            <label>Bank IFSC Code *</label>
+            <input type="text" id="ifsc" placeholder="SBIN0012345" required>
+        </div>
+        <button class="btn" onclick="submitApplication()">Submit Application</button>
+    </div>
+    <!-- Step 6: Success / Underwriting Assessment -->
+    <div id="step-6" class="step">
+        <div style="text-align: center;">
+            <h3 style="color: var(--accent-green);">Application Submitted!</h3>
+            <p>Your loan application is currently undergoing credit underwriting review[span_0](start_span)[span_0](end_span).</p>
+            <p><strong>Loan ID:</strong> AV-210323</p>
+            <p>Status: <strong>PENDING APPROVAL</strong>[span_1](start_span)[span_1](end_span)</p>
+        </div>
+    </div>
+</div>
 
-  try {
-    const { data, error } = await db.auth.signUp({ email, password });
-    if (error) throw error;
-
-    if (data.session) {
-      await updateScreen(data.session.user);
-      showMessage("Account created successfully.");
-    } else {
-      showMessage("Account created. Check your email to confirm, then log in.");
+<script>
+    function nextStep(stepNumber) {
+        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+        document.getElementById('step-' + stepNumber).classList.add('active');
     }
-  } catch (error) {
-    showMessage(error.message);
-  } finally {
-    $("signupBtn").disabled = false;
-  }
-});
 
-$("loanForm").addEventListener("submit", async event => {
-  event.preventDefault();
+    function prevStep(stepNumber) {
+        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+        document.getElementById('step-' + stepNumber).classList.add('active');
+    }
 
-  if (!currentUser) {
-    $("loanMessage").textContent = "Please log in first.";
-    return;
-  }
-
-  const btn = $("submitBtn");
-  btn.disabled = true;
-  $("loanMessage").textContent = "Submitting...";
-
-  try {
-    const record = {
-      "Full name": $("name").value.trim(),
-      "Phone number": $("phone").value.trim(),
-      "Loan type": $("loan").value,
-      "Loan amount": Number($("amount").value),
-      "Status": "Pending",
-      "user_id": currentUser.id
-    };
-
-    const { error } = await db
-      .from("loan_applicationssmfg")
-      .insert(record);
-
-    if (error) throw error;
-
-    $("loanForm").reset();
-    $("loanMessage").textContent = "Application submitted successfully.";
-    await loadApplications();
-  } catch (error) {
-    $("loanMessage").textContent = "Submission failed: " + error.message;
-  } finally {
-    btn.disabled = false;
-  }
-});
-
-$("logoutBtn").addEventListener("click", async () => {
-  const { error } = await db.auth.signOut();
-  if (error) {
-    showMessage(error.message);
-    return;
-  }
-  await updateScreen(null);
-});
-
-$("refreshBtn").addEventListener("click", loadApplications);
-
-db.auth.onAuthStateChange((event, session) => {
-  if (event === "INITIAL_SESSION" || event === "SIGNED_IN" ||
-      event === "SIGNED_OUT" || event === "USER_UPDATED") {
-    updateScreen(session?.user ?? null);
-  }
-});
+    function submitApplication() {
+        nextStep(6);
+    }
 </script>
+
 </body>
 </html>
