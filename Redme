@@ -1,10 +1,335 @@
+:root {
+  --primary: #125b45;
+  --primary-dark: #0a4031;
+  --background: #f3f7f5;
+  --text: #1b2924;
+  --muted: #68766f;
+  --border: #dce6e0;
+  --white: #ffffff;
+}
 
-# SMFG Loan Portal
+* {
+  box-sizing: border-box;
+}
 
-Demo loan enquiry website.
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
+  color: var(--text);
+  line-height: 1.5;
+}
 
-## Features
-- Loan enquiry form
-- Backend integration
-- Admin dashboard
-  
+.header {
+  min-height: 72px;
+  padding: 16px 6%;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.logo span {
+  color: #b18a43;
+}
+
+.header small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.container {
+  width: min(100% - 28px, 620px);
+  margin: 28px auto;
+  padding: 26px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(20, 60, 40, 0.05);
+}
+
+.progress {
+  height: 6px;
+  background: #e7eee9;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+#bar {
+  height: 100%;
+  width: 0;
+  background: var(--primary);
+  transition: width 0.25s ease;
+}
+
+#stepLabel {
+  margin: 12px 0 25px;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+h1, h2, h3 {
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: clamp(30px, 7vw, 42px);
+  margin: 12px 0;
+}
+
+h2 {
+  font-size: 26px;
+  margin-top: 0;
+}
+
+h3 {
+  font-size: 18px;
+  margin-top: 28px;
+}
+
+p {
+  margin-top: 8px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 12px;
+}
+
+.hero-icon {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: #e8f4ed;
+  color: var(--primary);
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 18px 0 7px;
+}
+
+input:not([type="checkbox"]):not([type="file"]),
+select,
+textarea,
+.readonly {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+}
+
+input[type="file"] {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: #f8faf9;
+  border: 1px dashed #b9c9bf;
+  border-radius: 9px;
+  font-size: 13px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #9bc8b1;
+  border-color: var(--primary);
+}
+
+button {
+  min-height: 46px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:focus-visible {
+  outline: 3px solid #b5d6c4;
+  outline-offset: 3px;
+}
+
+.primary {
+  color: white;
+  background: var(--primary);
+}
+
+.primary:hover {
+  background: var(--primary-dark);
+}
+
+.secondary {
+  color: var(--primary);
+  background: #eaf2ed;
+}
+
+.page > .primary,
+.page > form > .primary {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.notice {
+  padding: 13px;
+  margin: 18px 0;
+  background: #f3f6f4;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: #49574f;
+  font-size: 13px;
+}
+
+.info-card,
+.summary {
+  background: #f7faf8;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 20px 0;
+}
+
+.summary p {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+
+.summary p:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.summary strong {
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.check input {
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.buttons button {
+  flex: 1;
+}
+
+.preview {
+  min-height: 100px;
+  margin-top: 15px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  color: var(--muted);
+  overflow: hidden;
+}
+
+.preview img {
+  display: block;
+  max-width: 100%;
+  max-height: 280px;
+  object-fit: contain;
+}
+
+footer {
+  text-align: center;
+  padding: 15px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: calc(100% - 20px);
+    padding: 19px;
+    margin: 15px auto;
+    border-radius: 13px;
+  }
+
+  .header {
+    padding: 14px;
+  }
+
+  .logo {
+    font-size: 19px;
+  }
+
+  .header small {
+    font-size: 10px;
+  }
+
+  h2 {
+    font-size: 23px;
+  }
+
+  .buttons {
+    gap: 8px;
+  }
+
+  .buttons button {
+    padding: 11px 8px;
+    font-size: 13px;
+  }
+}
