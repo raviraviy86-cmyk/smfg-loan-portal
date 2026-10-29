@@ -1,398 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avivaa Finance - Loan Application</title>
-    <style>
-        :root {
-            --primary-color: #0b2545;
-            --accent-green: #138a36;
-            --bg-light: #f4f6f9;
-            --border-color: #cbd5e1;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-light);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-        .container {
-            width: 100%;
-            max-width: 480px;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            box-sizing: border-box;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        .header h2 {
-            color: var(--primary-color);
-            margin-bottom: 5px;
-        }
-        .header p {
-            color: #64748b;
-            font-size: 14px;
-            margin: 0;
-        }
-        .step {
-            display: none;
-        }
-        .step.active {
-            display: block;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #334155;
-            margin-bottom: 5px;
-        }
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--accent-green);
-        }
-        .btn {
-            width: 100%;
-            background-color: var(--accent-green);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-        .btn:hover {
-            opacity: 0.9;
-        }
-        .back-btn {
-            background: none;
-            border: none;
-            color: #64748b;
-            font-size: 14px;
-            cursor: pointer;
-            margin-bottom: 15px;
-            padding: 0;
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <div class="header">
-        <h2>Avivaa Finance</h2>
-        <p>Instant Online Loan Approval</p>
-    </div>
-
-    <!-- Step 1: Register / Create Account -->
-    <div id="step-1" class="step active">
-        <h3>Create Account</h3>
-        <div class="form-group">
-            <label>Full Name *</label>
-            <input type="text" id="fullName" placeholder="Enter your full name" required>
-        </div>
-        <div class="form-group">
-            <label>Email ID *</label>
-            <input type="email" id="email" placeholder="name@example.com" required>
-        </div>
-        <div class="form-group">
-            <label>Mobile Number *</label>
-            <input type="tel" id="phone" placeholder="Enter 10-digit number" required>
-        </div>
-        <div class="form-group">
-            <label>Password *</label>
-            <input type="password" id="password" placeholder="****" required>
-        </div>
-        <button class="btn" onclick="nextStep(2)">Verify & Register Account</button>
-    </div>
-
-    <!-- Step 2: Personal Information -->
-    <div id="step-2" class="step">
-        <button class="back-btn" onclick="prevStep(1)">← Back</button>
-        <h3>Personal Information</h3>
-        <div class="form-group">
-            <label>Full Name (As on Documents) *</label>
-            <input type="text" id="docName" placeholder="Enter full name" required>
-        </div>
-        <div class="form-group">
-            <label>Current Address *</label>
-            <input type="text" id="address" placeholder="House No, Street, City, Pin Code" required>
-        </div>
-        <div class="form-group">
-            <label>PAN Card Number *</label>
-            <input type="text" id="pan" placeholder="ABCDE1234F" required>
-        </div>
-        <div class="form-group">
-            <label>Aadhaar Card Number *</label>
-            <input type="text" id="aadhaar" placeholder="XXXX XXXX XXXX" required>
-        </div>
-        <div class="form-group">
-            <label>Employment Type *</label>
-            <select id="employment">
-                <option>Salaried Employee</option>
-                <option>Self-Employed / Business</option>
-                <option>Freelancer / Contractor</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Net Monthly Income (INR) *</label>
-            <input type="number" id="income" placeholder="e.g. 45000" required>
-        </div>
-        <button class="btn" onclick="nextStep(3)">Proceed to Loan Config</button>
-    </div>
-
-    <!-- Step 3: Configure Loan -->
-</div>
-<!DOCTYPE html>
-<html lang="en">
-<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Loan EMI Calculator</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:#eef1f7;font-family:Arial,sans-serif;color:#13203d}
-.card{max-width:520px;margin:20px auto;background:#fff;padding:22px;border-radius:24px;box-shadow:0 5px 25px #0001}
-h2{margin-top:0}
-label{display:block;margin-top:18px;font-weight:600;color:#66748b}
-select{width:100%;padding:14px;margin-top:8px;border:1px solid #dce2eb;border-radius:10px;background:white;font-size:16px}
-.summary{margin-top:25px;padding:22px 10px;text-align:center;background:#f7f8fc;border:1px solid #e0e5ed;border-radius:18px}
-.small{font-size:13px;letter-spacing:1px;color:#8795aa;font-weight:bold}
-.emi{font-size:36px;font-weight:bold;margin:16px 0}
-.green{color:#07852c}
-.line{display:flex;justify-content:space-between;gap:12px;margin:22px 0}
-.line span{color:#65748b}
-.line strong{text-align:right}
-button{width:100%;padding:15px;border:1px solid #dce2eb;border-radius:12px;background:#fff;font-size:16px;font-weight:bold;margin-top:10px;cursor:pointer}
-.apply{background:#008b2b;color:white;border:0;margin-top:16px}
-#schedule{display:none;margin-top:20px}
-.note{font-size:12px;line-height:1.6;color:#8995a7;text-align:center}
-</style>
+<title>Avivaa Finance - Loan Application</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="card">
-<h2>Loan EMI Calculator</h2>
-</div>
-<label>Loan Amount</label>
-<select id="amount" onchange="calculate()">
-<option value="100000">₹1,00,000</option>
-<option value="150000">₹1,50,000</option>
-<option value="200000">₹2,00,000</option>
-<option value="250000">₹2,50,000</option>
-<option value="300000">₹3,00,000</option>
-<option value="350000">₹3,50,000</option>
-<option value="400000">₹4,00,000</option>
-<option value="450000">₹4,50,000</option>
-<option value="500000">₹5,00,000</option>
-</select>
-</div>
-<label>Loan Tenure</label>
-<select id="months" onchange="calculate()">
-<option value="12">12 Months</option>
-<option value="18">18 Months</option>
-<option value="24">24 Months</option>
-<option value="36">36 Months</option>
-<option value="42">42 Months</option>
-</select>
-</div>
-<label>Interest Rate</label>
-<select id="rate" onchange="calculate()">
-<option value="1">1% Flat Monthly</option>
-</select>
-</div>
-<h3 class="small" style="margin-top:30px">ESTIMATED COST SUMMARY</h3>
+<header>
+  <div class="logo">Avivaa <span>Finance</span></div>
+  <small>Loan Application Demo</small>
+</header>
 
-<div class="summary">
-<div class="small">MONTHLY INSTALLMENT (EMI)</div>
-<div class="emi" id="emi">₹ 0</div>
-<strong class="green">INTEREST INCLUDED</strong>
-</div>
+<main class="container">
+  <div class="progress"><div id="bar"></div></div>
+  <p id="stepLabel">Welcome</p>
 
-<div class="line">
-<span>Interest Rate</span>
-<strong id="rateText">1% Flat Monthly</strong>
-</div>
-<div class="line">
-<span>Processing Fee (2%)</span>
-<strong id="fee">₹ 0</strong>
-</div>
-<div class="line">
-<span>GST on Fee (18%)</span>
-<strong id="gst">₹ 0</strong>
-</div>
-<hr>
-<div class="line">
-<strong>Net Disbursed (In Hand)</strong>
-<strong class="green" id="net">₹ 0</strong>
-</div>
-<div class="line">
-<strong>Total Repayable Amount</strong>
-<strong id="total">₹ 0</strong>
-</div>
+  <form id="loanForm">
 
-<button onclick="toggleSchedule()">View Complete EMI Schedule Chart</button>
-<div id="schedule"></div>
+    <section class="page active" data-title="Welcome">
+      <div class="hero-icon">₹</div>
+      <h1>Personal Loan</h1>
+      <p>Start your application online.</p>
+      <div class="notice">Demo website only. No real loan approval or money transfer.</div>
+      <button type="button" class="primary" onclick="go(1)">Get Started →</button>
+    </section>
 
-<button class="apply" onclick="alert('Connect your loan application form to continue.')">Apply Now →</button>
-<p class="note">Indicative calculation only. Actual loan terms, fees and taxes may vary.</p>
-</div>
+    <section class="page" data-title="Create Account">
+      <h2>Create Account</h2>
+      <label>Full name</label>
+      <input name="fullName" required autocomplete="name">
 
-<script>
-function money(n){
- return "₹ "+Math.round(n).toLocaleString("en-IN");
-}
+      <label>Email address</label>
+      <input name="email" type="email" required autocomplete="email">
 
-function calculate(){
- const p=Number(document.getElementById("amount").value);
- const m=Number(document.getElementById("months").value);
- const r=Number(document.getElementById("rate").value)/100;
+      <label>Phone number</label>
+      <input name="phone" type="tel" required>
 
- const interest=p*r*m;
- const total=p+interest;
- const emi=total/m;
- const fee=p*0.02;
- const gst=fee*0.18;
- const net=p-fee-gst;
-</div>
- document.getElementById("emi").textContent=money(emi);
- document.getElementById("fee").textContent=money(fee);
- document.getElementById("gst").textContent=money(gst);
- document.getElementById("net").textContent=money(net);
- document.getElementById("total").textContent=money(total);
- document.getElementById("rateText").textContent=
-   document.getElementById("rate").value+"% Flat Monthly";
+      <label>Password (demo only)</label>
+      <input name="password" type="password" minlength="8" required autocomplete="new-password">
+      <p class="muted">Do not use your real password on this demo.</p>
+    </section>
 
- document.getElementById("schedule").style.display="none";
- document.getElementById("schedule").innerHTML="";
-}
+    <section class="page" data-title="Personal Information">
+      <h2>Personal Information</h2>
 
-function toggleSchedule(){
- const box=document.getElementById("schedule");
- if(box.style.display==="block"){
-   box.style.display="none";
-   return;
- }
+      <label>Full name (as per document)</label>
+      <input name="applicantName" required>
 
- const p=Number(document.getElementById("amount").value);
- const m=Number(document.getElementById("months").value);
- const r=Number(document.getElementById("rate").value)/100;
- const emi=p*(1+r*m)/m;
+      <label>PAN card number (optional)</label>
+      <input name="pan" maxlength="10" placeholder="Optional">
 
- let html="<h3>EMI PAYMENT SCHEDULE</h3>";
- html+="<div class='line'><strong>Month</strong><strong>EMI Amount</strong></div>";
+      <label>Aadhaar number</label>
+      <input name="aadhaar" inputmode="numeric" pattern="[0-9]{12}" maxlength="12" required>
 
- for(let i=1;i<=m;i++){
-   html+="<div class='line'><span>Month "+i+
-         "</span><strong>"+money(emi)+"</strong></div>";
-  </div>
-      
-    <!-- Step 4: Upload KYC Files -->
-    <div id="step-4" class="step">
-        <button class="back-btn" onclick="prevStep(3)">← Back</button>
-        <h3>Upload KYC Files</h3>
-        <div class="form-group">
-            <label>PAN Card Front Upload *</label>
-            <input type="file" required>
-        </div>
-        <div class="form-group">
-            <label>Aadhaar Card Front Side *</label>
-            <input type="file" required>
-        </div>
-        <div class="form-group">
-            <label>Aadhaar Card Back Side *</label>
-            <input type="file" required>
-        </div>
-        <button class="btn" onclick="nextStep(5)">Proceed to Bank Details</button>
+      <label>Date of birth</label>
+      <input name="dob" type="date" required>
+
+      <label>Current address</label>
+      <textarea name="address" required></textarea>
+
+      <label>Employment type</label>
+      <select name="employment" required>
+        <option value="">Select</option>
+        <option>Salaried</option>
+        <option>Self-employed / Business</option>
+        <option>Freelancer / Contractor</option>
+      </select>
+
+      <label>Company / Business name</label>
+      <input name="company">
+
+      <label>Monthly income (₹)</label>
+      <input name="income" type="number" min="1" required>
+
+      <h3>Nominee Details</h3>
+      <label>Nominee full name</label>
+      <input name="nominee" required>
+
+      <label>Relationship</label>
+      <select name="relationship" required>
+        <option value="">Select relationship</option>
+        <option>Father</option>
+        <option>Mother</option>
+        <option>Spouse</option>
+        <option>Son</option>
+        <option>Daughter</option>
+        <option>Sibling</option>
+        <option>Other</option>
+      </select>
+
+      <label>Nominee phone (optional)</label>
+      <input name="nomineePhone" type="tel">
+
+      <label class="check">
+        <input type="checkbox" name="consent" required>
+        I confirm the details provided are accurate.
+      </label>
+    </section>
+
+    <section class="page" data-title="Loan Details">
+      <h2>Choose Your Loan</h2>
+
+      <label>Loan amount</label>
+      <select name="amount" id="amount" required>
+        <option value="">Select amount</option>
+        <option value="100000">₹1,00,000</option>
+        <option value="150000">₹1,50,000</option>
+        <option value="200000">₹2,00,000</option>
+        <option value="250000">₹2,50,000</option>
+        <option value="300000">₹3,00,000</option>
+        <option value="350000">₹3,50,000</option>
+        <option value="400000">₹4,00,000</option>
+        <option value="450000">₹4,50,000</option>
+        <option value="500000">₹5,00,000</option>
+      </select>
+
+      <label>Repayment period</label>
+      <select name="months" id="months" required>
+        <option value="">Select months</option>
+        <option value="9">9 months</option>
+        <option value="12">12 months</option>
+        <option value="18">18 months</option>
+        <option value="24">24 months</option>
+        <option value="36">36 months</option>
+        <option value="42">42 months</option>
+      </select>
+
+      <label>Illustrative interest rate</label>
+      <div class="readonly">1% per month (example only)</div>
+
+      <div class="summary">
+        <p>Loan amount <strong id="sumAmount">₹0</strong></p>
+        <p>Monthly EMI <strong id="emi">₹0</strong></p>
+        <p>Total repayment <strong id="total">₹0</strong></p>
+        <p>Total interest <strong id="interest">₹0</strong></p>
+      </div>
+      <p class="muted small">Estimates only. Actual terms depend on the lender. This is not an approval or loan offer.</p>
+    </section>
+
+    <section class="page" data-title="Document Upload">
+      <h2>Upload Documents</h2>
+      <p class="muted">Choose sample files to test this interface.</p>
+
+      <label>PAN card front (optional)</label>
+      <input type="file" name="panFile" accept="image/*,.pdf">
+
+      <label>Aadhaar front</label>
+      <input type="file" name="aadhaarFront" accept="image/*,.pdf" required>
+
+      <label>Aadhaar back</label>
+      <input type="file" name="aadhaarBack" accept="image/*,.pdf" required>
+
+      <label>Applicant profile photo</label>
+      <input type="file" name="profilePhoto" accept="image/*" required>
+
+      <label>Nominee ID document (optional)</label>
+      <input type="file" name="nomineeID" accept="image/*,.pdf">
+
+      <div class="notice">Use dummy files only. This demo does not upload or store documents.</div>
+    </section>
+
+    <section class="page" data-title="Selfie Verification">
+      <h2>Selfie Verification</h2>
+      <label>Select selfie photo</label>
+      <input type="file" id="selfie" name="selfie" accept="image/*" capture="user" required>
+      <div id="preview" class="preview">Photo preview</div>
+      <p class="muted small">Choose a photo from your phone. Face verification is not performed in this demo.</p>
+    </section>
+
+    <section class="page" data-title="Bank Details">
+      <h2>Bank Account Details</h2>
+
+      <label>Account holder name</label>
+      <input name="accountHolder" required>
+
+      <label>Bank name</label>
+      <input name="bankName" required>
+
+      <label>IFSC code</label>
+      <input name="ifsc" maxlength="11" pattern="[A-Za-z]{4}0[A-Za-z0-9]{6}" required>
+
+      <label>Account number</label>
+      <input name="accountNumber" inputmode="numeric" pattern="[0-9]{6,20}" required>
+
+      <label>Account type</label>
+      <select name="accountType" required>
+        <option value="">Select account type</option>
+        <option>Savings</option>
+        <option>Current</option>
+      </select>
+
+      <div class="notice">No bank transfer will occur. Do not enter real financial details in this demo.</div>
+    </section>
+
+    <section class="page" data-title="Review & Submit">
+      <h2>Application Summary</h2>
+      <div id="review" class="summary"></div>
+      <label class="check">
+        <input type="checkbox" name="reviewConsent" required>
+        I have reviewed this demo application.
+      </label>
+    </section>
+
+    <section class="page" data-title="Application Status">
+      <div class="hero-icon">✓</div>
+      <h2>Demo Application Submitted</h2>
+      <p>Your application preview is complete.</p>
+      <div class="notice">This is a simulated status only. No application has been sent to a lender, no documents have been verified, and no loan has been approved.</div>
+      <button type="button" class="secondary" onclick="location.reload()">Start Again</button>
+    </section>
+
+    <div class="buttons" id="buttons">
+      <button type="button" class="secondary" id="back" onclick="move(-1)">← Back</button>
+      <button type="button" class="primary" id="next" onclick="move(1)">Continue →</button>
+      <button type="button" class="primary hidden" id="submit" onclick="submitDemo()">Submit Demo</button>
     </div>
+  </form>
+</main>
 
-    <!-- Step 5: Disbursal Bank Account -->
-    <div id="step-5" class="step">
-        <button class="back-btn" onclick="prevStep(4)">← Back</button>
-        <h3>Disbursal Account</h3>
-        <div class="form-group">
-            <label>Account Holder Name *</label>
-            <input type="text" id="accName" placeholder="As per bank records" required>
-        </div>
-        <div class="form-group">
-            <label>Select Bank *</label>
-            <select>
-                <option>State Bank of India</option>
-                <option>HDFC Bank</option>
-                <option>ICICI Bank</option>
-                <option>Axis Bank</option>
-                <option>ICICI Bank</option>
-      <option> Bank</option>
-      <option>INSUS Bank</option>
-      <option>FEDERAL Bank</option>
-      <option>KERALA GRAMIN Bank</option>
-      <option>BANK OF MAHARASHTRA Bank</option>
-      <option>INDIAN Bank</option>
-      <option>IOB Bank</option>
-      <option>BOB Bank</option>
-      <option>CANARA Bank</option>
-      <option>KOTAK Bank</option>
-      <option>ESAF Bank</option>
-      <option>KARNATAKA Bank</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Account Number *</label>
-            <input type="text" id="accNo" placeholder="Enter account number" required>
-        </div>
-        <div class="form-group">
-            <label>Bank IFSC Code *</label>
-            <input type="text" id="ifsc" placeholder="SBIN0012345" required>
-        </div>
-        <button class="btn" onclick="submitApplication()">Submit Application</button>
-    </div>
-    <!-- Step 6: Success / Underwriting Assessment -->
-    <div id="step-6" class="step">
-        <div style="text-align: center;">
-            <h3 style="color: var(--accent-green);">Application Submitted!</h3>
-            <p>Your loan application is currently undergoing credit underwriting review[span_0](start_span)[span_0](end_span).</p>
-            <p><strong>Loan ID:</strong> AV-210323</p>
-            <p>Status: <strong>PENDING APPROVAL</strong>[span_1](start_span)[span_1](end_span)</p>
-        </div>
-    </div>
-</div>
-
-<script>
-    function nextStep(stepNumber) {
-        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-        document.getElementById('step-' + stepNumber).classList.add('active');
-    }
-
-    function prevStep(stepNumber) {
-        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-        document.getElementById('step-' + stepNumber).classList.add('active');
-    }
-
-    function submitApplication() {
-        nextStep(6);
-    }
-</script>
-
+<footer>Avivaa Finance · Demonstration website</footer>
+<script src="script.js"></script>
 </body>
-</html>
+    </html>
+    
