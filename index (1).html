@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avivaa Finance - Loan Application</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="logo">Avivaa <span>Finance</span></div>
+  <small>Loan Application Demo</small>
+</header>
+
+<main class="container">
+  <div class="progress"><div id="bar"></div></div>
+  <p id="stepLabel">Welcome</p>
+
+  <form id="loanForm">
+
+    <section class="page active" data-title="Welcome">
+      <div class="hero-icon">₹</div>
+      <h1>Personal Loan</h1>
+      <p>Start your application online.</p>
+      <div class="notice">Demo website only. No real loan approval or money transfer.</div>
+      <button type="button" class="primary" onclick="go(1)">Get Started →</button>
+    </section>
+
+    <section class="page" data-title="Create Account">
+      <h2>Create Account</h2>
+      <label>Full name</label>
+      <input name="fullName" required autocomplete="name">
+
+      <label>Email address</label>
+      <input name="email" type="email" required autocomplete="email">
+
+      <label>Phone number</label>
+      <input name="phone" type="tel" required>
+
+      <label>Password (demo only)</label>
+      <input name="password" type="password" minlength="8" required autocomplete="new-password">
+      <p class="muted">Do not use your real password on this demo.</p>
+    </section>
+
+    <section class="page" data-title="Personal Information">
+      <h2>Personal Information</h2>
+
+      <label>Full name (as per document)</label>
+      <input name="applicantName" required>
+
+      <label>PAN card number (optional)</label>
+      <input name="pan" maxlength="10" placeholder="Optional">
+
+      <label>Aadhaar number</label>
+      <input name="aadhaar" inputmode="numeric" pattern="[0-9]{12}" maxlength="12" required>
+
+      <label>Date of birth</label>
+      <input name="dob" type="date" required>
+
+      <label>Current address</label>
+      <textarea name="address" required></textarea>
+
+      <label>Employment type</label>
+      <select name="employment" required>
+        <option value="">Select</option>
+        <option>Salaried</option>
+        <option>Self-employed / Business</option>
+        <option>Freelancer / Contractor</option>
+      </select>
+
+      <label>Company / Business name</label>
+      <input name="company">
+
+      <label>Monthly income (₹)</label>
+      <input name="income" type="number" min="1" required>
+
+      <h3>Nominee Details</h3>
+      <label>Nominee full name</label>
+      <input name="nominee" required>
+
+      <label>Relationship</label>
+      <select name="relationship" required>
+        <option value="">Select relationship</option>
+        <option>Father</option>
+        <option>Mother</option>
+        <option>Spouse</option>
+        <option>Son</option>
+        <option>Daughter</option>
+        <option>Sibling</option>
+        <option>Other</option>
+      </select>
+
+      <label>Nominee phone (optional)</label>
+      <input name="nomineePhone" type="tel">
+
+      <label class="check">
+        <input type="checkbox" name="consent" required>
+        I confirm the details provided are accurate.
+      </label>
+    </section>
+
+    <section class="page" data-title="Loan Details">
+      <h2>Choose Your Loan</h2>
+
+      <label>Loan amount</label>
+      <select name="amount" id="amount" required>
+        <option value="">Select amount</option>
+        <option value="100000">₹1,00,000</option>
+        <option value="150000">₹1,50,000</option>
+        <option value="200000">₹2,00,000</option>
+        <option value="250000">₹2,50,000</option>
+        <option value="300000">₹3,00,000</option>
+        <option value="350000">₹3,50,000</option>
+        <option value="400000">₹4,00,000</option>
+        <option value="450000">₹4,50,000</option>
+        <option value="500000">₹5,00,000</option>
+      </select>
+
+      <label>Repayment period</label>
+      <select name="months" id="months" required>
+        <option value="">Select months</option>
+        <option value="9">9 months</option>
+        <option value="12">12 months</option>
+        <option value="18">18 months</option>
+        <option value="24">24 months</option>
+        <option value="36">36 months</option>
+        <option value="42">42 months</option>
+      </select>
+
+      <label>Illustrative interest rate</label>
+      <div class="readonly">1% per month (example only)</div>
+
+      <div class="summary">
+        <p>Loan amount <strong id="sumAmount">₹0</strong></p>
+        <p>Monthly EMI <strong id="emi">₹0</strong></p>
+        <p>Total repayment <strong id="total">₹0</strong></p>
+        <p>Total interest <strong id="interest">₹0</strong></p>
+      </div>
+      <p class="muted small">Estimates only. Actual terms depend on the lender. This is not an approval or loan offer.</p>
+    </section>
+
+    <section class="page" data-title="Document Upload">
+      <h2>Upload Documents</h2>
+      <p class="muted">Choose sample files to test this interface.</p>
+
+      <label>PAN card front (optional)</label>
+      <input type="file" name="panFile" accept="image/*,.pdf">
+
+      <label>Aadhaar front</label>
+      <input type="file" name="aadhaarFront" accept="image/*,.pdf" required>
+
+      <label>Aadhaar back</label>
+      <input type="file" name="aadhaarBack" accept="image/*,.pdf" required>
+
+      <label>Applicant profile photo</label>
+      <input type="file" name="profilePhoto" accept="image/*" required>
+
+      <label>Nominee ID document (optional)</label>
+      <input type="file" name="nomineeID" accept="image/*,.pdf">
+
+      <div class="notice">Use dummy files only. This demo does not upload or store documents.</div>
+    </section>
+
+    <section class="page" data-title="Selfie Verification">
+      <h2>Selfie Verification</h2>
+      <label>Select selfie photo</label>
+      <input type="file" id="selfie" name="selfie" accept="image/*" capture="user" required>
+      <div id="preview" class="preview">Photo preview</div>
+      <p class="muted small">Choose a photo from your phone. Face verification is not performed in this demo.</p>
+    </section>
+
+    <section class="page" data-title="Bank Details">
+      <h2>Bank Account Details</h2>
+
+      <label>Account holder name</label>
+      <input name="accountHolder" required>
+
+      <label>Bank name</label>
+      <input name="bankName" required>
+
+      <label>IFSC code</label>
+      <input name="ifsc" maxlength="11" pattern="[A-Za-z]{4}0[A-Za-z0-9]{6}" required>
+
+      <label>Account number</label>
+      <input name="accountNumber" inputmode="numeric" pattern="[0-9]{6,20}" required>
+
+      <label>Account type</label>
+      <select name="accountType" required>
+        <option value="">Select account type</option>
+        <option>Savings</option>
+        <option>Current</option>
+      </select>
+
+      <div class="notice">No bank transfer will occur. Do not enter real financial details in this demo.</div>
+    </section>
+
+    <section class="page" data-title="Review & Submit">
+      <h2>Application Summary</h2>
+      <div id="review" class="summary"></div>
+      <label class="check">
+        <input type="checkbox" name="reviewConsent" required>
+        I have reviewed this demo application.
+      </label>
+    </section>
+
+    <section class="page" data-title="Application Status">
+      <div class="hero-icon">✓</div>
+      <h2>Demo Application Submitted</h2>
+      <p>Your application preview is complete.</p>
+      <div class="notice">This is a simulated status only. No application has been sent to a lender, no documents have been verified, and no loan has been approved.</div>
+      <button type="button" class="secondary" onclick="location.reload()">Start Again</button>
+    </section>
+
+    <div class="buttons" id="buttons">
+      <button type="button" class="secondary" id="back" onclick="move(-1)">← Back</button>
+      <button type="button" class="primary" id="next" onclick="move(1)">Continue →</button>
+      <button type="button" class="primary hidden" id="submit" onclick="submitDemo()">Submit Demo</button>
+    </div>
+  </form>
+</main>
+
+<footer>Avivaa Finance · Demonstration website</footer>
+<script src="script.js"></script>
+</body>
+</html>
