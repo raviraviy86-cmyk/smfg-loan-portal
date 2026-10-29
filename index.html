@@ -164,31 +164,7 @@
     </div>
 
     <!-- Step 3: Configure Loan -->
-    <div id="step-3" class="step">
-        <button class="back-btn" onclick="prevStep(2)">← Back</button>
-        <h3>Configure Your Loan</h3>
-        <div class="form-group">
-            <label>Loan Amount Required (₹)</label>
-            <select id="Loan amount">
-            <option>100,000 </option>
-            <option>150,000 </option>
-            <option>200,000 </option>
-            <option>250,000 </option>
-            <option>300,000 </option>
-            <option>350,000 </option>
-            <option>400,000 </option>
-            <option>450,000 </option>
-            <option>500,000 </option>
-        </div>
-        <div class="form-group">
-            <label>Repayment Period</label>
-            <select id="tenure">
-                <option>12 Months</option>
-                <option>18 Months</option>
-                <option>24 Months</option>
-                <option>36 Months</option>
-         </div>
-        
+</div>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -218,7 +194,7 @@ button{width:100%;padding:15px;border:1px solid #dce2eb;border-radius:12px;backg
 <body>
 <div class="card">
 <h2>Loan EMI Calculator</h2>
-
+</div>
 <label>Loan Amount</label>
 <select id="amount" onchange="calculate()">
 <option value="100000">₹1,00,000</option>
@@ -231,7 +207,7 @@ button{width:100%;padding:15px;border:1px solid #dce2eb;border-radius:12px;backg
 <option value="450000">₹4,50,000</option>
 <option value="500000">₹5,00,000</option>
 </select>
-
+</div>
 <label>Loan Tenure</label>
 <select id="months" onchange="calculate()">
 <option value="12">12 Months</option>
@@ -240,12 +216,12 @@ button{width:100%;padding:15px;border:1px solid #dce2eb;border-radius:12px;backg
 <option value="36">36 Months</option>
 <option value="42">42 Months</option>
 </select>
-
+</div>
 <label>Interest Rate</label>
 <select id="rate" onchange="calculate()">
 <option value="1">1% Flat Monthly</option>
 </select>
-
+</div>
 <h3 class="small" style="margin-top:30px">ESTIMATED COST SUMMARY</h3>
 
 <div class="summary">
@@ -299,7 +275,7 @@ function calculate(){
  const fee=p*0.02;
  const gst=fee*0.18;
  const net=p-fee-gst;
-
+</div>
  document.getElementById("emi").textContent=money(emi);
  document.getElementById("fee").textContent=money(fee);
  document.getElementById("gst").textContent=money(gst);
@@ -335,12 +311,7 @@ function toggleSchedule(){
  box.innerHTML=html;
  box.style.display="block";
 }
-calculate();
-</script>
-</body>
-</html>
-        
-
+  </div>
     <!-- Step 4: Upload KYC Files -->
     <div id="step-4" class="step">
         <button class="back-btn" onclick="prevStep(3)">← Back</button>
@@ -375,6 +346,19 @@ calculate();
                 <option>HDFC Bank</option>
                 <option>ICICI Bank</option>
                 <option>Axis Bank</option>
+                <option>ICICI Bank</option>
+      <option> Bank</option>
+      <option>INSUS Bank</option>
+      <option>FEDERAL Bank</option>
+      <option>KERALA GRAMIN Bank</option>
+      <option>BANK OF MAHARASHTRA Bank</option>
+      <option>INDIAN Bank</option>
+      <option>IOB Bank</option>
+      <option>BOB Bank</option>
+      <option>CANARA Bank</option>
+      <option>KOTAK Bank</option>
+      <option>ESAF Bank</option>
+      <option>KARNATAKA Bank</option>
             </select>
         </div>
         <div class="form-group">
